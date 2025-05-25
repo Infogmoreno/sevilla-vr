@@ -1,0 +1,431 @@
+<html>
+  <head>
+    <title>Sevilla-VR</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-asset>
+        <!-- imagenes 360º -->
+        <img
+          id="SetasEncarnacion"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/SetasEncarnac_equirectangular.png?v=1645186778076"
+          crossorigin="anonymous"
+        />
+
+        <img
+          id="PlazaNueva"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/Plza_Nueva_equirectangular.png?v=1645120829737"
+          crossorigin="anonymous"
+        />
+        <img
+          id="VirgenReyes"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/Plza_VirgenReyes_equirectangular.png?v=1645190372493"
+          crossorigin="anonymous"
+        />
+        <img
+          id="Inmaculada"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/Plza_Inmaculada_equirectangular.png?v=1645120836183"
+          crossorigin="anonymous"
+        />
+        <img
+          id="AvdaConst"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/AvdaConstitu_equirect.jpg?v=1645126417263"
+          crossorigin="anonymous"
+        />
+        <img
+          id="MarquesContadero"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/MarquesContadero_equirectangular.png?v=1645120844114"
+          crossorigin="anonymous"
+        />
+        <img
+          id="PtaJerez"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/Puerta_Jerez_equirectangular.png?v=1645123398655"
+          crossorigin="anonymous"
+        />
+
+        <!--botones-->
+        <img
+          id="icon_btn_Setas"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_Setas_Encarnacion.png?v=1645186755538"
+          crossorigin="anonymous"
+        />
+
+        <img
+          id="icon_btn_PlzaNueva"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_Plaza_Nueva.png?v=1645188043338"
+          crossorigin="anonymous"
+        />
+        <img
+          id="icon_btn_VirgeReyes"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_Plza_VirgenReyes.png?v=1645172273513"
+          crossorigin="anonymous"
+        />
+        <img
+          id="icon_btn_Inmaculada"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_LaInmaculada.png?v=1645213442184"
+          crossorigin="anonymous"
+        />
+        <img
+          id="icon_btn_AvdConst"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_AvdaConstituc.png?v=1645172273513"
+          crossorigin="anonymous"
+        />
+        <img
+          id="icon_btn_MarquesContad"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_MarquesContadero.png?v=1645172273513"
+          crossorigin="anonymous"
+        />
+        <img
+          id="icon_btn_PtaJerez"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_PuertaJerez.png?v=1645172273513"
+          crossorigin="anonymous"
+        />
+        <img
+          id="icon_btn_inicio"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/btn_inicio.png?v=1645445484798"
+          crossorigin="anonimous"
+        />
+
+        <!-- sonido-->
+        <audio
+          id="click"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/blip2.wav?v=1645180171013"
+          crossorigin="anonymous"
+        ></audio>
+
+        <!--Pantalla inicio-->
+
+        <a-image
+          id="pantallainicio"
+          src="https://cdn.glitch.global/287a3e82-ce7f-403a-b020-2e37d5322971/Pantalla_inicio.jpg?v=1645450346269"
+          crossorigin="anonimous"
+        ></a-image>
+      </a-asset>
+
+      <!-- cámara-cursor -->
+
+      <a-entity camera look-controls position="0 1.7 0">
+        <a-entity
+          id="cursor"
+          raycaster="objects:.clickable"
+          cursor="fuse: true; fuseTimeout: 1000"
+          position="0 0 -1"
+          geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.015"
+          material="color: cyan; shader: flat; opacity: 0.5"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="pantallainicial" rotation="0 12 0">
+        <a-plane
+          class="clickable"
+          id="btn_inicio"
+          position="0 0 -4.5"
+          src="#icon_btn_inicio"
+          width="1.2"
+          height="0.45"
+          opacity="0.9"
+          sound="on: mouseenter; src: #click; volume:0.3"
+          onclick="setsceneppal()"
+          event-set__renders="_event: click;
+                              _target: #escenappal;
+                              visible: true;"
+          event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6"
+          event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+        ></a-plane>
+
+        <a-curvedimage
+          src="#pantallainicio"
+          height="1"
+          position="11.5 1 -5"
+          radius="2"
+          theta-length="72"
+          rotation="0 -180 0"
+          scale="10 10 1"
+        ></a-curvedimage>
+        <a-sky color="Black"></a-sky>
+      </a-entity>
+
+      <a-entity id="escenappal" visible="false">
+        <!-- botones -->
+
+        <a-entity id="grupo_botones" position="-1 0 0.5">
+          <a-plane
+            class="clickable"
+            id="btn_Setas"
+            position="1 2.4 -3"
+            src="#icon_btn_Setas"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #SetasEncarnacion;
+                              rotation: 0 165 0;
+                              dur: 150;
+                              
+                              "
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;
+                                click
+                                "
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;"
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6 "
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+
+          <a-plane
+            class="clickable"
+            id="btn_Plaza Nueva"
+            position="1 2 -3"
+            src="#icon_btn_PlzaNueva"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #PlazaNueva;
+                              rotation: 0 145 0;
+                              dur: 150;
+                              
+                              "
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;
+                                click
+                                "
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;"
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6"
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+          <a-plane
+            class="clickable"
+            id="btn_VirgenReyes"
+            position="1 1.6 -3"
+            src="#icon_btn_VirgeReyes"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #VirgenReyes;
+                              rotation: 0 135 0;
+                              dur: 150;
+                              "
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;"
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;"
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                opacity:0.6"
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+          <a-plane
+            class="clickable"
+            id="btn_Inmaculada"
+            position="1 1.2 -3"
+            src="#icon_btn_Inmaculada"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #Inmaculada;
+                              rotation: 0 27 0;
+                              dur: 150;"
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;"
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;"
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6"
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+          <a-plane
+            class="clickable"
+            id="btn_Constitucion"
+            position="1 0.8 -3"
+            src="#icon_btn_AvdConst"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #AvdaConst;
+                              rotation: 0 -50 0;
+                              dur: 150;"
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;"
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;
+                                 "
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6"
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+          <a-plane
+            class="clickable"
+            id="btn_MarquesCont"
+            position="1 0.4 -3"
+            src="#icon_btn_MarquesContad"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #MarquesContadero;
+                              rotation: 0 -5 0;
+                              dur: 150;"
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;"
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;"
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6"
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+          <a-plane
+            class="clickable"
+            id="btn_PtaJerez"
+            position="1 0 -3"
+            src="#icon_btn_PtaJerez"
+            width="0.75"
+            height="0.25"
+            opacity="0.9"
+            sound="on: mouseenter; src: #click; volume:0.3"
+            event-set__renders="_event: click;
+                              _target: #renders;
+                              src: #PtaJerez;
+                              rotation: 0 35 0;
+                              dur: 150;"
+            event-set__mouseenter="_event: mouseenter;
+                                 _target: #cursor;
+                                color: white;"
+            event-set__mouseleave="_event: mouseleave;
+                                 _target: #cursor;
+                                color: black;"
+            event-set__expandir="_event: mouseenter;
+                                 animation.property: scale;
+                                 animation.from: 1 1 1;
+                                 animation.to: 1.2 1.2 1.2;
+                                 animation.dur: 100;
+                                 opacity:0.6"
+            event-set__contraer="_event: mouseleave;
+                                 animation.property: scale;
+                                 animation.from: 1.2 1.2 1.2;
+                                 animation.to: 1 1 1;
+                                 animation.dur: 100;
+                                 opacity:0.9"
+          ></a-plane>
+        </a-entity>
+
+        <!-- Render -->
+
+        <a-sky id="renders" src="#PlazaNueva" rotation="0 90 0"></a-sky>
+      </a-entity>
+    </a-scene>
+
+    <!-- scripts -->
+
+    <script>
+      document.querySelector("#boton").onclick = function () {
+        document.querySelector("#loading").style.display = "none";
+      };
+    </script>
+    <script type="text/javascript">
+      function setsceneppal() {
+        document.getElementById("escenappal").setAttribute("visible", "true");
+        document
+          .getElementById("pantallainicial")
+          .setAttribute("visible", "false");
+      }
+    </script>
+  </body>
+</html>
